@@ -44,20 +44,11 @@ Public Class Form1
         Console.WriteLine("Lade Konfiuration")
         If loadGlobalConfig() Then
             Console.WriteLine("Versuche mit Server zu verbinden")
-            Dim options = New MQTTnet.Client.Options.MqttClientOptionsBuilder().WithClientId(clientID).WithTcpServer(serverAddress, serverPort).WithCredentials(mqttUser, mqttPw).WithCleanSession().Build()
 
-            Dim mqttTask As Task(Of MQTTnet.Client.Connecting.MqttClientAuthenticateResult) = mqttClient.ConnectAsync(options, Threading.CancellationToken.None)
-
-            While mqttTask.IsCompleted = False
-                Console.WriteLine(mqttTask.IsCompleted)
-            End While
-            Console.WriteLine(mqttTask.IsCompleted)
-            Console.WriteLine(mqttClient.IsConnected)
 
             AddHandler SerialPort1.PinChanged, AddressOf SerialPort1_PinChanged
-            'AddHandler SerialPort1.
 
-            SerialTimer.Start()
+            ConnectionTimer.Start()
         End If
     End Sub
     Private Sub SerialPort1_PinChanged(sender As Object, e As IO.Ports.SerialPinChangedEventArgs)
@@ -71,7 +62,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub SerialTimer_Tick(sender As Object, e As EventArgs) Handles SerialTimer.Tick
+    Private Sub ConnectionTimer_Tick(sender As Object, e As EventArgs) Handles ConnectionTimer.Tick
         If SerialPort1.IsOpen Then
 
         Else
@@ -85,6 +76,26 @@ Public Class Form1
                     BtnStatusLabel.Tag = 1
                 End If
             End Try
+        End If
+        If mqttClient.IsConnected Then
+            If MQTTStatusLabel.Tag <> 0 Then
+                MQTTStatusLabel.Text = "Mit Server verbunden"
+                MQTTStatusLabel.Tag = 0
+            End If
+        Else
+            If MQTTStatusLabel.Tag <> 1 Then
+                MQTTStatusLabel.Text = "Keine Server Verbindung"
+                MQTTStatusLabel.Tag = 1
+                Dim options = New MQTTnet.Client.Options.MqttClientOptionsBuilder().WithClientId(clientID).WithTcpServer(serverAddress, serverPort).WithCredentials(mqttUser, mqttPw).WithCleanSession().Build()
+
+                Dim mqttTask As Task(Of MQTTnet.Client.Connecting.MqttClientAuthenticateResult) = mqttClient.ConnectAsync(options, Threading.CancellationToken.None)
+
+                While mqttTask.IsCompleted = False
+                    Console.WriteLine(mqttTask.IsCompleted)
+                End While
+                Console.WriteLine(mqttTask.IsCompleted)
+                Console.WriteLine(mqttClient.IsConnected)
+            End If
         End If
     End Sub
     Private Sub alert(text As String)

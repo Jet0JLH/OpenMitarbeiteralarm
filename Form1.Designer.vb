@@ -27,7 +27,7 @@ Partial Class Form1
         Me.MQTTStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.BtnStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.SerialTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.ConnectionTimer = New System.Windows.Forms.Timer(Me.components)
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -45,14 +45,16 @@ Partial Class Form1
         'MQTTStatusLabel
         '
         Me.MQTTStatusLabel.Name = "MQTTStatusLabel"
-        Me.MQTTStatusLabel.Size = New System.Drawing.Size(152, 17)
-        Me.MQTTStatusLabel.Text = "Nicht mit Server verbunden"
+        Me.MQTTStatusLabel.Size = New System.Drawing.Size(70, 17)
+        Me.MQTTStatusLabel.Text = "Serverstatus"
+        Me.MQTTStatusLabel.Tag = -1
         '
         'BtnStatusLabel
         '
         Me.BtnStatusLabel.Name = "BtnStatusLabel"
         Me.BtnStatusLabel.Size = New System.Drawing.Size(70, 17)
         Me.BtnStatusLabel.Text = "Knopfstatus"
+        Me.BtnStatusLabel.Tag = -1
         '
         'Button1
         '
@@ -66,9 +68,9 @@ Partial Class Form1
         Me.Button1.Text = "Test"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'SerialTimer
+        'ConnectionTimer
         '
-        Me.SerialTimer.Interval = 1000
+        Me.ConnectionTimer.Interval = 1000
         '
         'Form1
         '
@@ -89,7 +91,7 @@ Partial Class Form1
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents MQTTStatusLabel As ToolStripStatusLabel
     Friend WithEvents Button1 As Button
-    Friend WithEvents SerialTimer As Timer
+    Friend WithEvents ConnectionTimer As Timer
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
     Friend WithEvents BtnStatusLabel As ToolStripStatusLabel
 End Class
