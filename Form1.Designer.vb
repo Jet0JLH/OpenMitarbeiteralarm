@@ -68,7 +68,7 @@ Partial Class Form1
         '
         'SerialTimer
         '
-        Me.SerialTimer.Interval = 10000
+        Me.SerialTimer.Interval = 1000
         '
         'Form1
         '

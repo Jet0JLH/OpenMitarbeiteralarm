@@ -7,6 +7,7 @@ Public Class Form1
     Dim clientID As String
     Dim mqttUser As String
     Dim mqttPw As String
+    Dim alertGroups As List(Of String)
 
     Dim factory = New MQTTnet.MqttFactory
     Dim mqttClient As MQTTnet.Client.MqttClient = factory.CreateMqttClient
@@ -21,6 +22,10 @@ Public Class Form1
                 mqttPw = xml.<conf>.<server>.<pw>.Value
                 clientID = xml.<conf>.<client>.<id>.Value
                 SerialPort1.PortName = xml.<conf>.<button>.<serialport>.Value
+                alertGroups = New List(Of String)
+                For Each item In xml.<conf>.<alerts>.Elements("group")
+                    alertGroups.Add(item.Value)
+                Next
                 Return True
             Catch ex As Exception
                 Console.Error.WriteLine("Fehler beim Laden der Konfigurationsdatei")
@@ -60,7 +65,7 @@ Public Class Form1
             Threading.Thread.Sleep(50)
             If SerialPort1.IsOpen Then
                 If Not SerialPort1.CtsHolding Then
-                    MsgBox("Alarm")
+                    alert("Alarm")
                 End If
             End If
         End If
@@ -80,6 +85,14 @@ Public Class Form1
                     BtnStatusLabel.Tag = 1
                 End If
             End Try
+        End If
+    End Sub
+    Private Sub alert(text As String)
+        If mqttClient.IsConnected Then
+            For Each item In alertGroups
+                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(text).WithExactlyOnceQoS().Build()
+                mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
+            Next
         End If
     End Sub
 End Class
