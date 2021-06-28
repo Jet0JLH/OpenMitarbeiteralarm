@@ -22,15 +22,19 @@ Partial Class Form1
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.MQTTStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.BtnStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.SerialTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MQTTStatusLabel})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MQTTStatusLabel, Me.BtnStatusLabel})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 428)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -44,6 +48,12 @@ Partial Class Form1
         Me.MQTTStatusLabel.Size = New System.Drawing.Size(152, 17)
         Me.MQTTStatusLabel.Text = "Nicht mit Server verbunden"
         '
+        'BtnStatusLabel
+        '
+        Me.BtnStatusLabel.Name = "BtnStatusLabel"
+        Me.BtnStatusLabel.Size = New System.Drawing.Size(70, 17)
+        Me.BtnStatusLabel.Text = "Knopfstatus"
+        '
         'Button1
         '
         Me.Button1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -55,6 +65,10 @@ Partial Class Form1
         Me.Button1.TabIndex = 1
         Me.Button1.Text = "Test"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'SerialTimer
+        '
+        Me.SerialTimer.Interval = 10000
         '
         'Form1
         '
@@ -75,4 +89,7 @@ Partial Class Form1
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents MQTTStatusLabel As ToolStripStatusLabel
     Friend WithEvents Button1 As Button
+    Friend WithEvents SerialTimer As Timer
+    Friend WithEvents SerialPort1 As IO.Ports.SerialPort
+    Friend WithEvents BtnStatusLabel As ToolStripStatusLabel
 End Class
