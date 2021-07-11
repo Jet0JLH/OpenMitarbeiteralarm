@@ -1,4 +1,5 @@
 ﻿Imports System.IO.Ports
+Imports MQTTnet.Client
 
 Public Class Form1
     Const globalConfigPath As String = "config.xml"
@@ -35,8 +36,9 @@ Public Class Form1
     End Function
     Private Sub testMQTT() Handles Button1.Click
         If mqttClient.IsConnected Then
-            Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic("gebäude1/warnkreis1").WithPayload("Testalarm").WithExactlyOnceQoS().Build()
-            mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
+            'Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic("gebäude1/warnkreis1").WithPayload("Testalarm").WithExactlyOnceQoS().Build()
+            'mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
+            alert("test")
         End If
     End Sub
 
@@ -95,15 +97,31 @@ Public Class Form1
                 End While
                 Console.WriteLine(mqttTask.IsCompleted)
                 Console.WriteLine(mqttClient.IsConnected)
+                For Each item In alertGroups
+                    Dim unused = subscribeMQTT(item)
+                Next
+                mqttClient.UseApplicationMessageReceivedHandler(AddressOf reciveAlert)
             End If
         End If
+
     End Sub
     Private Sub alert(text As String)
         If mqttClient.IsConnected Then
             For Each item In alertGroups
-                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(text).WithExactlyOnceQoS().Build()
+                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
                 mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
             Next
         End If
+    End Sub
+
+    Private Async Function subscribeMQTT(topic As String) As Task(Of MQTTnet.Client.Subscribing.MqttClientSubscribeResult)
+        Dim filter As MQTTnet.MqttTopicFilter = New MQTTnet.MqttTopicFilterBuilder().WithTopic(topic).WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce).Build()
+        Dim options = New MQTTnet.Client.Subscribing.MqttClientSubscribeOptions()
+        options.TopicFilters.Add(filter)
+        Return Await mqttClient.SubscribeAsync(options, Threading.CancellationToken.None)
+    End Function
+
+    Private Sub reciveAlert(e As MQTTnet.MqttApplicationMessageReceivedEventArgs)
+        MsgBox(e.ApplicationMessage.Topic & " - " & System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload))
     End Sub
 End Class
