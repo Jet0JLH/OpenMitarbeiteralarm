@@ -38,7 +38,7 @@ Public Class Form1
         If mqttClient.IsConnected Then
             'Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic("gebäude1/warnkreis1").WithPayload("Testalarm").WithExactlyOnceQoS().Build()
             'mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
-            alert("test")
+            sendAlert()
         End If
     End Sub
 
@@ -58,7 +58,7 @@ Public Class Form1
             Threading.Thread.Sleep(50)
             If SerialPort1.IsOpen Then
                 If Not SerialPort1.CtsHolding Then
-                    alert("Alarm")
+                    sendAlert()
                 End If
             End If
         End If
@@ -105,10 +105,11 @@ Public Class Form1
         End If
 
     End Sub
-    Private Sub alert(text As String)
+    Private Sub sendAlert()
+        Dim text As String = My.Computer.Name & ";" & My.User.Name
         If mqttClient.IsConnected Then
             For Each item In alertGroups
-                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
+                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(Text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
                 mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
             Next
         End If
@@ -122,6 +123,13 @@ Public Class Form1
     End Function
 
     Private Sub reciveAlert(e As MQTTnet.MqttApplicationMessageReceivedEventArgs)
-        MsgBox(e.ApplicationMessage.Topic & " - " & System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload))
+        Dim parameter As List(Of String) = System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload).Split(";").ToList
+        If parameter.Count > 0 Then
+            If parameter(0) <> My.Computer.Name Then
+                Dim alert As New AlertForm
+                alert.setText("Max", "Mustermann", "Musterraum 1")
+                alert.ShowDialog()
+            End If
+        End If
     End Sub
 End Class

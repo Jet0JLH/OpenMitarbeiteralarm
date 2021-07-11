@@ -59,5 +59,14 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.IO.UnmanagedMemoryStream ähnlich wie System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property alert() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("alert", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
