@@ -34,7 +34,7 @@ Public Class Form1
         End If
         Return False
     End Function
-    Private Sub testMQTT() Handles Button1.Click
+    Private Sub testMQTT()
         If mqttClient.IsConnected Then
             'Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic("gebäude1/warnkreis1").WithPayload("Testalarm").WithExactlyOnceQoS().Build()
             'mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
@@ -43,6 +43,7 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CheckForIllegalCrossThreadCalls = False
         Console.WriteLine("Lade Konfiuration")
         If loadGlobalConfig() Then
             Console.WriteLine("Versuche mit Server zu verbinden")
@@ -126,10 +127,36 @@ Public Class Form1
         Dim parameter As List(Of String) = System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload).Split(";").ToList
         If parameter.Count > 0 Then
             If parameter(0) <> My.Computer.Name Then
-                Dim alert As New AlertForm
-                alert.setText("Max", "Mustermann", "Musterraum 1")
-                alert.ShowDialog()
+                setAlertText("Max", "Mustermann", "Musterraum")
+                My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
+                Me.Show()
+                Me.TopMost = True
+                Me.BringToFront()
+                Me.Focus()
             End If
+        End If
+    End Sub
+    Public Sub setAlertText(vorname As String, nachname As String, raum As String)
+        Label2.Text = "In Raum " & raum & " bei Mitarbeiter " & vorname & " " & nachname & " wurde Alarm ausgelöst!" & vbCrLf & "Bitte einmal nach dem Kollegen sehen"
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Hide()
+    End Sub
+
+    Private Sub BeendenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BeendenToolStripMenuItem.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Me.Hide()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles BackgroundColorTimer.Tick
+        If Me.BackColor = Color.Red Then
+            Me.BackColor = Color.LightGray
+        Else
+            Me.BackColor = Color.Red
         End If
     End Sub
 End Class
