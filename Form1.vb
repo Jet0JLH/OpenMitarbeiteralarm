@@ -8,6 +8,9 @@ Public Class Form1
     Dim clientID As String
     Dim mqttUser As String
     Dim mqttPw As String
+    Dim userFirstname As String
+    Dim userLastname As String
+    Dim userRoom As String
     Dim alertGroups As List(Of String)
 
     Dim factory = New MQTTnet.MqttFactory
@@ -16,20 +19,43 @@ Public Class Form1
     Public Function loadGlobalConfig() As Boolean
         If My.Computer.FileSystem.FileExists(globalConfigPath) Then
             Try
+                Dim de As System.DirectoryServices.DirectoryEntry = System.DirectoryServices.AccountManagement.UserPrincipal.Current.GetUnderlyingObject
                 Dim xml As XDocument = XDocument.Load(globalConfigPath)
                 serverAddress = xml.<conf>.<server>.<address>.Value
                 serverPort = xml.<conf>.<server>.<port>.Value
                 mqttUser = xml.<conf>.<server>.<user>.Value
                 mqttPw = xml.<conf>.<server>.<pw>.Value
-                clientID = xml.<conf>.<client>.<id>.Value
-                SerialPort1.PortName = xml.<conf>.<button>.<serialport>.Value
+                If xml.<conf>.<client>.<firstname>.Value <> "" Then
+                    userFirstname = xml.<conf>.<client>.<firstname>.Value
+                Else
+                    userFirstname = System.DirectoryServices.AccountManagement.UserPrincipal.Current.GivenName
+                End If
+                If xml.<conf>.<client>.<lastname>.Value <> "" Then
+                    userLastname = xml.<conf>.<client>.<lastname>.Value
+                Else
+                    userLastname = System.DirectoryServices.AccountManagement.UserPrincipal.Current.Surname
+                End If
+                If xml.<conf>.<client>.<room>.Value <> "" Then
+                    userRoom = xml.<conf>.<client>.<room>.Value
+                Else
+                    userRoom = de.Properties.Item("physicalDeliveryOfficeName").Value
+                End If
+                If xml.<conf>.<client>.<id>.Value <> "" Then
+                    clientID = xml.<conf>.<client>.<id>.Value
+                Else
+                    clientID = My.Computer.Name
+                End If
+                If xml.<conf>.<button>.<serialport>.Value <> "" Then
+                    SerialPort1.PortName = xml.<conf>.<button>.<serialport>.Value
+                End If
                 alertGroups = New List(Of String)
                 For Each item In xml.<conf>.<alerts>.Elements("group")
                     alertGroups.Add(item.Value)
                 Next
                 Return True
             Catch ex As Exception
-                Console.Error.WriteLine("Fehler beim Laden der Konfigurationsdatei")
+                MsgBox("Fehler beim Laden der Konfigurationsdatei", MsgBoxStyle.Critical)
+                Me.Close()
             End Try
         End If
         Return False
@@ -70,9 +96,11 @@ Public Class Form1
 
         Else
             Try
-                SerialPort1.Open()
-                BtnStatusLabel.Text = "Knopf vorhanden"
-                BtnStatusLabel.Tag = 0
+                If SerialPort1.PortName <> "none" Then
+                    SerialPort1.Open()
+                    BtnStatusLabel.Text = "Knopf vorhanden"
+                    BtnStatusLabel.Tag = 0
+                End If
             Catch ex As Exception
                 If BtnStatusLabel.Tag <> 1 Then
                     BtnStatusLabel.Text = "Keine Verbindung zu Knopf"
@@ -107,7 +135,7 @@ Public Class Form1
 
     End Sub
     Private Sub sendAlert()
-        Dim text As String = My.Computer.Name & ";" & My.User.Name
+        Dim text As String = My.Computer.Name & ";alert;" & userFirstname & ";" & userLastname & ";" & userRoom
         If mqttClient.IsConnected Then
             For Each item In alertGroups
                 Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(Text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
@@ -125,9 +153,15 @@ Public Class Form1
 
     Private Sub reciveAlert(e As MQTTnet.MqttApplicationMessageReceivedEventArgs)
         Dim parameter As List(Of String) = System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload).Split(";").ToList
-        If parameter.Count > 0 Then
-            If parameter(0) <> My.Computer.Name Then
-                setAlertText("Max", "Mustermann", "Musterraum")
+        If parameter.Count > 1 Then
+            If parameter(0) <> My.Computer.Name And parameter(1) = "alert" Then
+                If parameter.Count <= 3 Then
+                    setAlertText(parameter(1), "", "?")
+                ElseIf parameter.Count <= 4 Then
+                    setAlertText(parameter(1), parameter(2), "?")
+                Else
+                    setAlertText(parameter(1), parameter(2), parameter(3))
+                End If
                 My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
                 Me.Show()
                 Me.TopMost = True
@@ -138,6 +172,7 @@ Public Class Form1
     End Sub
     Public Sub setAlertText(vorname As String, nachname As String, raum As String)
         Label2.Text = "In Raum " & raum & " bei Mitarbeiter " & vorname & " " & nachname & " wurde Alarm ausgelöst!" & vbCrLf & "Bitte einmal nach dem Kollegen sehen"
+        Label3.Text = "Ausgelöst: " & My.Computer.Clock.LocalTime
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
