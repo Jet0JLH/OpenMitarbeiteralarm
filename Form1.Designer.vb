@@ -34,10 +34,11 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.EinstellungenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BackgroundColorTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.EinstellungenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AlarmAuslösenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -116,9 +117,15 @@ Partial Class Form1
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EinstellungenToolStripMenuItem, Me.BeendenToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlarmAuslösenToolStripMenuItem, Me.EinstellungenToolStripMenuItem, Me.BeendenToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 70)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 92)
+        '
+        'EinstellungenToolStripMenuItem
+        '
+        Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'BeendenToolStripMenuItem
         '
@@ -140,11 +147,11 @@ Partial Class Form1
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Ausgelöst: "
         '
-        'EinstellungenToolStripMenuItem
+        'AlarmAuslösenToolStripMenuItem
         '
-        Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
+        Me.AlarmAuslösenToolStripMenuItem.Name = "AlarmAuslösenToolStripMenuItem"
+        Me.AlarmAuslösenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AlarmAuslösenToolStripMenuItem.Text = "Alarm auslösen"
         '
         'Form1
         '
@@ -185,4 +192,5 @@ Partial Class Form1
     Friend WithEvents BackgroundColorTimer As Timer
     Friend WithEvents Label3 As Label
     Friend WithEvents EinstellungenToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents AlarmAuslösenToolStripMenuItem As ToolStripMenuItem
 End Class

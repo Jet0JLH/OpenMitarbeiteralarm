@@ -201,4 +201,8 @@ Public Class Form1
             SettingsForm.ShowDialog()
         End If
     End Sub
+
+    Private Sub AlarmAuslösenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AlarmAuslösenToolStripMenuItem.Click
+        sendAlert()
+    End Sub
 End Class
