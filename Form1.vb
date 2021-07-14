@@ -2,7 +2,7 @@
 Imports MQTTnet.Client
 
 Public Class Form1
-    Const globalConfigPath As String = "config.xml"
+    Public Const globalConfigPath As String = "config.xml"
     Dim serverAddress As String
     Dim serverPort As Integer
     Dim clientID As String
@@ -15,12 +15,13 @@ Public Class Form1
 
     Dim factory = New MQTTnet.MqttFactory
     Dim mqttClient As MQTTnet.Client.MqttClient = factory.CreateMqttClient
+    Public xml As XDocument
 
     Public Function loadGlobalConfig() As Boolean
         If My.Computer.FileSystem.FileExists(globalConfigPath) Then
             Try
                 Dim de As System.DirectoryServices.DirectoryEntry = System.DirectoryServices.AccountManagement.UserPrincipal.Current.GetUnderlyingObject
-                Dim xml As XDocument = XDocument.Load(globalConfigPath)
+                xml = XDocument.Load(globalConfigPath)
                 serverAddress = xml.<conf>.<server>.<address>.Value
                 serverPort = xml.<conf>.<server>.<port>.Value
                 mqttUser = xml.<conf>.<server>.<user>.Value
@@ -192,6 +193,12 @@ Public Class Form1
             Me.BackColor = Color.LightGray
         Else
             Me.BackColor = Color.Red
+        End If
+    End Sub
+
+    Private Sub EinstellungenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EinstellungenToolStripMenuItem.Click
+        If Application.OpenForms().OfType(Of SettingsForm).Any = False Then
+            SettingsForm.ShowDialog()
         End If
     End Sub
 End Class
