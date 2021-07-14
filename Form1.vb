@@ -43,7 +43,7 @@ Public Class Form1
                 If xml.<conf>.<client>.<id>.Value <> "" Then
                     clientID = xml.<conf>.<client>.<id>.Value
                 Else
-                    clientID = My.Computer.Name
+                    clientID = My.Computer.Name & "-" & My.User.CurrentPrincipal.Identity.Name
                 End If
                 If xml.<conf>.<button>.<serialport>.Value <> "" Then
                     SerialPort1.PortName = xml.<conf>.<button>.<serialport>.Value
