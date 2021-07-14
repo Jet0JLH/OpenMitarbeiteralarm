@@ -34,25 +34,28 @@ Partial Class SettingsForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.TextBox8 = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.TextBox9 = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -169,76 +172,13 @@ Partial Class SettingsForm
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Client"
         '
-        'GroupBox3
+        'Label10
         '
-        Me.GroupBox3.Controls.Add(Me.TextBox9)
-        Me.GroupBox3.Controls.Add(Me.Label12)
-        Me.GroupBox3.Controls.Add(Me.Label11)
-        Me.GroupBox3.Location = New System.Drawing.Point(328, 184)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(330, 75)
-        Me.GroupBox3.TabIndex = 2
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Knopf"
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.RichTextBox1)
-        Me.GroupBox4.Controls.Add(Me.Label13)
-        Me.GroupBox4.Location = New System.Drawing.Point(12, 184)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(310, 152)
-        Me.GroupBox4.TabIndex = 3
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Alarmkreise"
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Location = New System.Drawing.Point(88, 85)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(236, 20)
-        Me.TextBox5.TabIndex = 10
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(33, 88)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(49, 13)
-        Me.Label6.TabIndex = 9
-        Me.Label6.Text = "Vorname"
-        '
-        'TextBox6
-        '
-        Me.TextBox6.Location = New System.Drawing.Point(88, 111)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(236, 20)
-        Me.TextBox6.TabIndex = 12
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(23, 114)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(59, 13)
-        Me.Label7.TabIndex = 11
-        Me.Label7.Text = "Nachname"
-        '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(88, 137)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(236, 20)
-        Me.TextBox7.TabIndex = 14
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(10, 140)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(72, 13)
-        Me.Label8.TabIndex = 13
-        Me.Label8.Text = "Raumnummer"
+        Me.Label10.Location = New System.Drawing.Point(6, 16)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(318, 26)
+        Me.Label10.TabIndex = 9
+        Me.Label10.Text = "Alle Felder sind optional und werden ggf. aus den Benutzerdaten gelesen"
         '
         'TextBox8
         '
@@ -256,22 +196,65 @@ Partial Class SettingsForm
         Me.Label9.TabIndex = 15
         Me.Label9.Text = "ClientID"
         '
-        'Label10
+        'TextBox7
         '
-        Me.Label10.Location = New System.Drawing.Point(6, 16)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(318, 26)
-        Me.Label10.TabIndex = 9
-        Me.Label10.Text = "Alle Felder sind optional und werden ggf. aus den Benutzerdaten gelesen"
+        Me.TextBox7.Location = New System.Drawing.Point(88, 137)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(236, 20)
+        Me.TextBox7.TabIndex = 14
         '
-        'Label11
+        'Label8
         '
-        Me.Label11.Location = New System.Drawing.Point(6, 16)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(318, 26)
-        Me.Label11.TabIndex = 17
-        Me.Label11.Text = "Name des COM Ports an dem der Alarmtaster angeschlossen ist. Leer lassen wenn kei" &
-    "ner verwendet wird"
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(10, 140)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(72, 13)
+        Me.Label8.TabIndex = 13
+        Me.Label8.Text = "Raumnummer"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Location = New System.Drawing.Point(88, 111)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.Size = New System.Drawing.Size(236, 20)
+        Me.TextBox6.TabIndex = 12
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(23, 114)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(59, 13)
+        Me.Label7.TabIndex = 11
+        Me.Label7.Text = "Nachname"
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(88, 85)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(236, 20)
+        Me.TextBox5.TabIndex = 10
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(33, 88)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(49, 13)
+        Me.Label6.TabIndex = 9
+        Me.Label6.Text = "Vorname"
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.TextBox9)
+        Me.GroupBox3.Controls.Add(Me.Label12)
+        Me.GroupBox3.Controls.Add(Me.Label11)
+        Me.GroupBox3.Location = New System.Drawing.Point(328, 184)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(330, 75)
+        Me.GroupBox3.TabIndex = 2
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Knopf"
         '
         'TextBox9
         '
@@ -289,6 +272,37 @@ Partial Class SettingsForm
         Me.Label12.TabIndex = 17
         Me.Label12.Text = "COM-Port"
         '
+        'Label11
+        '
+        Me.Label11.Location = New System.Drawing.Point(6, 16)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(318, 26)
+        Me.Label11.TabIndex = 17
+        Me.Label11.Text = "Name des COM Ports an dem der Alarmtaster angeschlossen ist. Leer lassen wenn kei" &
+    "ner verwendet wird"
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.Button4)
+        Me.GroupBox4.Controls.Add(Me.Label14)
+        Me.GroupBox4.Controls.Add(Me.ComboBox1)
+        Me.GroupBox4.Controls.Add(Me.RichTextBox1)
+        Me.GroupBox4.Controls.Add(Me.Label13)
+        Me.GroupBox4.Location = New System.Drawing.Point(12, 184)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(310, 152)
+        Me.GroupBox4.TabIndex = 3
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Alarmkreise"
+        '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(9, 48)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.Size = New System.Drawing.Size(295, 71)
+        Me.RichTextBox1.TabIndex = 19
+        Me.RichTextBox1.Text = ""
+        '
         'Label13
         '
         Me.Label13.Location = New System.Drawing.Point(6, 16)
@@ -296,14 +310,6 @@ Partial Class SettingsForm
         Me.Label13.Size = New System.Drawing.Size(298, 26)
         Me.Label13.TabIndex = 18
         Me.Label13.Text = "Pro Zeile kann ein Alarmkreis angegeben werden, auf dem alamiert werden soll"
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.Location = New System.Drawing.Point(9, 48)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(295, 95)
-        Me.RichTextBox1.TabIndex = 19
-        Me.RichTextBox1.Text = ""
         '
         'Button1
         '
@@ -332,6 +338,34 @@ Partial Class SettingsForm
         Me.Button3.Text = "Abbrechen"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"Alarm 1", "Alarm 2"})
+        Me.ComboBox1.Location = New System.Drawing.Point(74, 125)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(185, 21)
+        Me.ComboBox1.TabIndex = 20
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(6, 128)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(62, 13)
+        Me.Label14.TabIndex = 9
+        Me.Label14.Text = "Alarmsound"
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(265, 123)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(38, 23)
+        Me.Button4.TabIndex = 21
+        Me.Button4.Text = "Play"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
         'SettingsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -355,6 +389,7 @@ Partial Class SettingsForm
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -389,4 +424,7 @@ Partial Class SettingsForm
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents Label14 As Label
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents Button4 As Button
 End Class

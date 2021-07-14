@@ -12,6 +12,7 @@ Public Class Form1
     Dim userLastname As String
     Dim userRoom As String
     Dim alertGroups As List(Of String)
+    Public alertSound As Integer = 0
 
     Dim factory = New MQTTnet.MqttFactory
     Dim mqttClient As MQTTnet.Client.MqttClient = factory.CreateMqttClient
@@ -48,6 +49,9 @@ Public Class Form1
                 End If
                 If xml.<conf>.<button>.<serialport>.Value <> "" Then
                     SerialPort1.PortName = xml.<conf>.<button>.<serialport>.Value
+                End If
+                If IsNumeric(xml.<conf>.<alerts>.<sound>.Value) Then
+                    alertSound = CInt(xml.<conf>.<alerts>.<sound>.Value)
                 End If
                 alertGroups = New List(Of String)
                 For Each item In xml.<conf>.<alerts>.Elements("group")
@@ -163,7 +167,12 @@ Public Class Form1
                 Else
                     setAlertText(parameter(2), parameter(3), parameter(4))
                 End If
-                My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
+                Select Case alertSound
+                    Case 0
+                        My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
+                    Case 1
+                        My.Computer.Audio.Play(My.Resources.alert2, AudioPlayMode.Background)
+                End Select
                 Me.Show()
                 Me.TopMost = True
                 Me.BringToFront()

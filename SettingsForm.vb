@@ -16,6 +16,11 @@
         For Each item In Form1.xml.<conf>.<alerts>.Elements("group")
             RichTextBox1.AppendText(item.Value & vbCrLf)
         Next
+        If Form1.alertSound <= 1 Then
+            ComboBox1.SelectedIndex = Form1.alertSound
+        Else
+            ComboBox1.SelectedIndex = 0
+        End If
     End Sub
     Public Function generateConfig() As XDocument
         Dim xml As New XDocument(<conf><server></server><client></client><alerts></alerts><button></button></conf>)
@@ -55,6 +60,8 @@
             xml.Element("conf").Element("button").Add(<serialport></serialport>)
             xml.Element("conf").Element("button").Element("serialport").Value = removeSpaces(TextBox9.Text)
         End If
+        xml.Element("conf").Element("alerts").Add(<sound></sound>)
+        xml.Element("conf").Element("alerts").Element("sound").Value = ComboBox1.SelectedIndex
         For Each line In RichTextBox1.Lines
             If removeSpaces(line) <> "" Then
                 Dim element As New XElement(<group></group>)
@@ -95,4 +102,13 @@
         End While
         Return text
     End Function
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Select Case ComboBox1.SelectedIndex
+            Case 0
+                My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
+            Case 1
+                My.Computer.Audio.Play(My.Resources.alert2, AudioPlayMode.Background)
+        End Select
+    End Sub
 End Class
