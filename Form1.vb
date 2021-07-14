@@ -156,11 +156,11 @@ Public Class Form1
         If parameter.Count > 1 Then
             If parameter(0) <> My.Computer.Name And parameter(1) = "alert" Then
                 If parameter.Count <= 3 Then
-                    setAlertText(parameter(1), "", "?")
+                    setAlertText(parameter(2), "", "?")
                 ElseIf parameter.Count <= 4 Then
-                    setAlertText(parameter(1), parameter(2), "?")
+                    setAlertText(parameter(2), parameter(3), "?")
                 Else
-                    setAlertText(parameter(1), parameter(2), parameter(3))
+                    setAlertText(parameter(2), parameter(3), parameter(4))
                 End If
                 My.Computer.Audio.Play(My.Resources.alert, AudioPlayMode.Background)
                 Me.Show()
