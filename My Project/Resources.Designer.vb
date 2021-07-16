@@ -77,5 +77,25 @@ Namespace My.Resources
                 Return ResourceManager.GetStream("alert2", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Friend ReadOnly Property Maalarm() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Maalarm", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        '''</summary>
+        Friend ReadOnly Property MaalarmConnected() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("MaalarmConnected", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
     End Module
 End Namespace

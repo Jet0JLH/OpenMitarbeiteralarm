@@ -79,6 +79,8 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
+        NotifyIcon1.Icon = My.Resources.Maalarm
+        NotifyIcon1.Text = "Lade Konfiguration..."
         Console.WriteLine("Lade Konfiuration")
         If loadGlobalConfig() Then
             Console.WriteLine("Versuche mit Server zu verbinden")
@@ -228,11 +230,15 @@ Public Class Form1
     Private Sub disconnectAlert()
         If MQTTStatusLabel.Tag <> 0 Then
             MQTTStatusLabel.Tag = 0
+            NotifyIcon1.Text = "Getrennt"
+            NotifyIcon1.Icon = My.Resources.Maalarm
             NotifyIcon1.ShowBalloonTip(10000, "Keine Verbindung", "Aktuell keine Verbindung zum Server vorhanden", ToolTipIcon.Error)
         End If
     End Sub
     Private Sub connectAlert()
         MQTTStatusLabel.Tag = 1
+        NotifyIcon1.Text = "Verbunden"
+        NotifyIcon1.Icon = My.Resources.MaalarmConnected
         NotifyIcon1.ShowBalloonTip(5000, "Verbunden", "Verbindung zum Server erfolgreich hergestellt", ToolTipIcon.Info)
     End Sub
 End Class

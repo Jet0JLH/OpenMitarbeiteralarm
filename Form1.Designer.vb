@@ -39,7 +39,6 @@ Partial Class Form1
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BackgroundColorTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.StatusStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -110,7 +109,6 @@ Partial Class Form1
         'NotifyIcon1
         '
         Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.NotifyIcon1.Icon = CType(resources.GetObject("NotifyIcon1.Icon"), System.Drawing.Icon)
         Me.NotifyIcon1.Text = "Open Mitarbeiteralarm"
         Me.NotifyIcon1.Visible = True
         '
@@ -169,8 +167,6 @@ Partial Class Form1
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Open Mitarbeiteralarm"
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
