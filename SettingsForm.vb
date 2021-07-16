@@ -12,9 +12,35 @@
 
         TextBox9.Text = Form1.xml.<conf>.<button>.<serialport>.Value
 
-        RichTextBox1.Clear()
+        DataGridView1.Rows.Clear()
         For Each item In Form1.xml.<conf>.<alerts>.Elements("group")
-            RichTextBox1.AppendText(item.Value & vbCrLf)
+            Dim direction As Integer = 0
+            If item.Attribute("direction") IsNot Nothing Then
+                If IsNumeric(item.Attribute("direction").Value) Then
+                    If CInt(item.Attribute("direction").Value) < 3 And CInt(item.Attribute("direction").Value) >= 0 Then
+                        direction = CInt(item.Attribute("direction").Value)
+                    End If
+                End If
+            End If
+            Dim row As New DataGridViewRow()
+            Dim pathCell As New DataGridViewTextBoxCell()
+            pathCell.Value = item.Value
+            row.Cells.Add(pathCell)
+            Dim sendCell As New DataGridViewCheckBoxCell()
+            If direction = 0 Or direction = 1 Then
+                sendCell.Value = True
+            Else
+                sendCell.Value = False
+            End If
+            row.Cells.Add(sendCell)
+            Dim reciveCell As New DataGridViewCheckBoxCell()
+            If direction = 0 Or direction = 2 Then
+                reciveCell.Value = True
+            Else
+                reciveCell.Value = False
+            End If
+            row.Cells.Add(reciveCell)
+            DataGridView1.Rows.Add(row)
         Next
         If Form1.alertSound <= 1 Then
             ComboBox1.SelectedIndex = Form1.alertSound
@@ -62,11 +88,20 @@
         End If
         xml.Element("conf").Element("alerts").Add(<sound></sound>)
         xml.Element("conf").Element("alerts").Element("sound").Value = ComboBox1.SelectedIndex
-        For Each line In RichTextBox1.Lines
-            If removeSpaces(line) <> "" Then
-                Dim element As New XElement(<group></group>)
-                element.Value = removeSpaces(line)
-                xml.Element("conf").Element("alerts").Add(element)
+        For Each row As DataGridViewRow In DataGridView1.Rows
+            If row.IsNewRow = False Then
+                If removeSpaces(row.Cells(0).Value) <> "" Then
+                    Dim element As New XElement(<group></group>)
+                    element.Value = removeSpaces(row.Cells(0).Value)
+                    If row.Cells(1).Value And row.Cells(2).Value Then
+                        element.@direction = 0
+                    ElseIf row.Cells(1).Value Then
+                        element.@direction = 1
+                    ElseIf row.Cells(2).Value Then
+                        element.@direction = 2
+                    End If
+                    xml.Element("conf").Element("alerts").Add(element)
+                End If
             End If
         Next
         Return xml

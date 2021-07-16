@@ -11,7 +11,7 @@ Public Class Form1
     Dim userFirstname As String
     Dim userLastname As String
     Dim userRoom As String
-    Dim alertGroups As List(Of String)
+    Dim alertGroups As List(Of alertGroup)
     Public alertSound As Integer = 0
 
     Dim factory = New MQTTnet.MqttFactory
@@ -53,9 +53,21 @@ Public Class Form1
                 If IsNumeric(xml.<conf>.<alerts>.<sound>.Value) Then
                     alertSound = CInt(xml.<conf>.<alerts>.<sound>.Value)
                 End If
-                alertGroups = New List(Of String)
+                alertGroups = New List(Of alertGroup)
                 For Each item In xml.<conf>.<alerts>.Elements("group")
-                    alertGroups.Add(item.Value)
+                    If item.Attribute("direction") IsNot Nothing Then
+                        If IsNumeric(item.Attribute("direction").Value) Then
+                            If CInt(item.Attribute("direction").Value) < 3 And CInt(item.Attribute("direction").Value) >= 0 Then
+                                alertGroups.Add(New alertGroup(item.Value, CInt(item.Attribute("direction").Value)))
+                            Else
+                                alertGroups.Add(New alertGroup(item.Value))
+                            End If
+                        Else
+                            alertGroups.Add(New alertGroup(item.Value))
+                        End If
+                    Else
+                        alertGroups.Add(New alertGroup(item.Value))
+                    End If
                 Next
                 Return True
             Catch ex As Exception
@@ -127,7 +139,9 @@ Public Class Form1
                 End While
                 If mqttClient.IsConnected Then
                     For Each item In alertGroups
-                        Dim unused = subscribeMQTT(item)
+                        If item.canRecive Then
+                            Dim unused = subscribeMQTT(item.path)
+                        End If
                     Next
                 End If
             End If
@@ -138,8 +152,10 @@ Public Class Form1
         Dim text As String = My.Computer.Name & ";alert;" & userFirstname & ";" & userLastname & ";" & userRoom
         If mqttClient.IsConnected Then
             For Each item In alertGroups
-                Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item).WithPayload(Text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
-                mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
+                If item.canSend Then
+                    Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic(item.path).WithPayload(text).WithExactlyOnceQoS().WithRetainFlag(False).Build()
+                    mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
+                End If
             Next
         End If
     End Sub

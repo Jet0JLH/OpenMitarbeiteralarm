@@ -48,18 +48,21 @@ Partial Class SettingsForm
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Button4 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Path = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.send = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.recieve = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -283,11 +286,10 @@ Partial Class SettingsForm
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.DataGridView1)
         Me.GroupBox4.Controls.Add(Me.Button4)
         Me.GroupBox4.Controls.Add(Me.Label14)
         Me.GroupBox4.Controls.Add(Me.ComboBox1)
-        Me.GroupBox4.Controls.Add(Me.RichTextBox1)
-        Me.GroupBox4.Controls.Add(Me.Label13)
         Me.GroupBox4.Location = New System.Drawing.Point(12, 184)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(310, 152)
@@ -295,21 +297,33 @@ Partial Class SettingsForm
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Alarmkreise"
         '
-        'RichTextBox1
+        'Button4
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(9, 48)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(295, 71)
-        Me.RichTextBox1.TabIndex = 19
-        Me.RichTextBox1.Text = ""
+        Me.Button4.Location = New System.Drawing.Point(265, 123)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(38, 23)
+        Me.Button4.TabIndex = 21
+        Me.Button4.Text = "Play"
+        Me.Button4.UseVisualStyleBackColor = True
         '
-        'Label13
+        'Label14
         '
-        Me.Label13.Location = New System.Drawing.Point(6, 16)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(298, 26)
-        Me.Label13.TabIndex = 18
-        Me.Label13.Text = "Pro Zeile kann ein Alarmkreis angegeben werden, auf dem alamiert werden soll"
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(6, 128)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(62, 13)
+        Me.Label14.TabIndex = 9
+        Me.Label14.Text = "Alarmsound"
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"Alarm 1", "Alarm 2"})
+        Me.ComboBox1.Location = New System.Drawing.Point(74, 125)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(185, 21)
+        Me.ComboBox1.TabIndex = 20
         '
         'Button1
         '
@@ -338,39 +352,41 @@ Partial Class SettingsForm
         Me.Button3.Text = "Abbrechen"
         Me.Button3.UseVisualStyleBackColor = True
         '
-        'ComboBox1
+        'DataGridView1
         '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Alarm 1", "Alarm 2"})
-        Me.ComboBox1.Location = New System.Drawing.Point(74, 125)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(185, 21)
-        Me.ComboBox1.TabIndex = 20
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Path, Me.send, Me.recieve})
+        Me.DataGridView1.Location = New System.Drawing.Point(6, 16)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(298, 103)
+        Me.DataGridView1.TabIndex = 7
         '
-        'Label14
+        'Path
         '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(6, 128)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(62, 13)
-        Me.Label14.TabIndex = 9
-        Me.Label14.Text = "Alarmsound"
+        Me.Path.FillWeight = 130.0!
+        Me.Path.HeaderText = "Pfad"
+        Me.Path.Name = "Path"
+        Me.Path.Width = 130
         '
-        'Button4
+        'send
         '
-        Me.Button4.Location = New System.Drawing.Point(265, 123)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(38, 23)
-        Me.Button4.TabIndex = 21
-        Me.Button4.Text = "Play"
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.send.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.send.HeaderText = "Senden"
+        Me.send.Name = "send"
+        Me.send.Width = 50
+        '
+        'recieve
+        '
+        Me.recieve.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.recieve.HeaderText = "Empfangen"
+        Me.recieve.Name = "recieve"
+        Me.recieve.Width = 67
         '
         'SettingsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(668, 347)
+        Me.ClientSize = New System.Drawing.Size(668, 342)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
@@ -390,6 +406,7 @@ Partial Class SettingsForm
         Me.GroupBox3.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -419,12 +436,14 @@ Partial Class SettingsForm
     Friend WithEvents TextBox9 As TextBox
     Friend WithEvents Label12 As Label
     Friend WithEvents Label11 As Label
-    Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents Label13 As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Label14 As Label
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Button4 As Button
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Path As DataGridViewTextBoxColumn
+    Friend WithEvents send As DataGridViewCheckBoxColumn
+    Friend WithEvents recieve As DataGridViewCheckBoxColumn
 End Class
