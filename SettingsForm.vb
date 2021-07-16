@@ -2,8 +2,8 @@
     Public Sub loadConfig()
         TextBox1.Text = Form1.xml.<conf>.<server>.<address>.Value
         TextBox2.Text = Form1.xml.<conf>.<server>.<port>.Value
-        TextBox3.Text = Form1.xml.<conf>.<server>.<user>.Value
-        TextBox4.Text = Form1.xml.<conf>.<server>.<pw>.Value
+        TextBox4.Text = Form1.xml.<conf>.<server>.<user>.Value
+        TextBox3.Text = Form1.xml.<conf>.<server>.<pw>.Value
 
         TextBox5.Text = Form1.xml.<conf>.<client>.<firstname>.Value
         TextBox6.Text = Form1.xml.<conf>.<client>.<lastname>.Value
@@ -32,13 +32,13 @@
             xml.Element("conf").Element("server").Add(<port></port>)
             xml.Element("conf").Element("server").Element("port").Value = removeSpaces(TextBox2.Text)
         End If
-        If removeSpaces(TextBox3.Text) <> "" Then
-            xml.Element("conf").Element("server").Add(<user></user>)
-            xml.Element("conf").Element("server").Element("user").Value = removeSpaces(TextBox3.Text)
-        End If
         If removeSpaces(TextBox4.Text) <> "" Then
+            xml.Element("conf").Element("server").Add(<user></user>)
+            xml.Element("conf").Element("server").Element("user").Value = removeSpaces(TextBox4.Text)
+        End If
+        If removeSpaces(TextBox3.Text) <> "" Then
             xml.Element("conf").Element("server").Add(<pw></pw>)
-            xml.Element("conf").Element("server").Element("pw").Value = removeSpaces(TextBox4.Text)
+            xml.Element("conf").Element("server").Element("pw").Value = removeSpaces(TextBox3.Text)
         End If
         If removeSpaces(TextBox5.Text) <> "" Then
             xml.Element("conf").Element("client").Add(<firstname></firstname>)
