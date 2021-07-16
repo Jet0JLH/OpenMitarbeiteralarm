@@ -16,7 +16,7 @@ Public Class Form1
 
     Dim factory = New MQTTnet.MqttFactory
     Dim mqttClient As MQTTnet.Client.MqttClient = factory.CreateMqttClient
-    Public xml As XDocument
+    Public xml As New XDocument
 
     Public Function loadGlobalConfig() As Boolean
         If My.Computer.FileSystem.FileExists(globalConfigPath) Then
@@ -60,7 +60,6 @@ Public Class Form1
                 Return True
             Catch ex As Exception
                 MsgBox("Fehler beim Laden der Konfigurationsdatei", MsgBoxStyle.Critical)
-                Me.Close()
             End Try
         End If
         Return False
@@ -79,6 +78,12 @@ Public Class Form1
             mqttClient.UseConnectedHandler(AddressOf connectAlert)
             ConnectionTimer.Start()
             ConnectionTimer_Tick(ConnectionTimer, New EventArgs)
+        Else
+            If MsgBox("Soll die Konfigurationsdatei angelegt werden?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                SettingsForm.ShowDialog()
+            End If
+            MsgBox("Der Mitarbeiteralarm wird nun beendet")
+            Me.Close()
         End If
     End Sub
     Private Sub SerialPort1_PinChanged(sender As Object, e As IO.Ports.SerialPinChangedEventArgs)

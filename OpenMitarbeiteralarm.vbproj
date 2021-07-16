@@ -149,7 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Maalarm.ico" />
-    <None Include="Resources\Maalarm.ico" />
     <None Include="Resources\alert2.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

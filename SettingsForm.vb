@@ -90,9 +90,10 @@
         Me.Close()
     End Sub
 
-    Private Sub SettingsForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub SettingsForm_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         loadConfig()
     End Sub
+
     Private Function removeSpaces(text As String) As String
         While text.StartsWith(" ")
             text = text.Substring(1)
