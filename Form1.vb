@@ -21,7 +21,6 @@ Public Class Form1
     Public Function loadGlobalConfig() As Boolean
         If My.Computer.FileSystem.FileExists(globalConfigPath) Then
             Try
-                Dim de As System.DirectoryServices.DirectoryEntry = System.DirectoryServices.AccountManagement.UserPrincipal.Current.GetUnderlyingObject
                 xml = XDocument.Load(globalConfigPath)
                 serverAddress = xml.<conf>.<server>.<address>.Value
                 serverPort = xml.<conf>.<server>.<port>.Value
@@ -40,6 +39,7 @@ Public Class Form1
                 If xml.<conf>.<client>.<room>.Value <> "" Then
                     userRoom = xml.<conf>.<client>.<room>.Value
                 Else
+                    Dim de As System.DirectoryServices.DirectoryEntry = System.DirectoryServices.AccountManagement.UserPrincipal.Current.GetUnderlyingObject
                     userRoom = de.Properties.Item("physicalDeliveryOfficeName").Value
                 End If
                 If xml.<conf>.<client>.<id>.Value <> "" Then
