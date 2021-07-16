@@ -34,18 +34,17 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.AlarmAuslösenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EinstellungenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BackgroundColorTimer = New System.Windows.Forms.Timer(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.AlarmAuslösenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MQTTStatusLabel, Me.BtnStatusLabel})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 257)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
@@ -70,7 +69,7 @@ Partial Class Form1
         '
         'ConnectionTimer
         '
-        Me.ConnectionTimer.Interval = 1000
+        Me.ConnectionTimer.Interval = 10000
         '
         'SerialPort1
         '
@@ -119,18 +118,24 @@ Partial Class Form1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AlarmAuslösenToolStripMenuItem, Me.EinstellungenToolStripMenuItem, Me.BeendenToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 92)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 70)
+        '
+        'AlarmAuslösenToolStripMenuItem
+        '
+        Me.AlarmAuslösenToolStripMenuItem.Name = "AlarmAuslösenToolStripMenuItem"
+        Me.AlarmAuslösenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.AlarmAuslösenToolStripMenuItem.Text = "Alarm auslösen"
         '
         'EinstellungenToolStripMenuItem
         '
         Me.EinstellungenToolStripMenuItem.Name = "EinstellungenToolStripMenuItem"
-        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EinstellungenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.EinstellungenToolStripMenuItem.Text = "Einstellungen"
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.BeendenToolStripMenuItem.Text = "Beenden"
         '
         'BackgroundColorTimer
@@ -146,12 +151,6 @@ Partial Class Form1
         Me.Label3.Size = New System.Drawing.Size(59, 13)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "Ausgelöst: "
-        '
-        'AlarmAuslösenToolStripMenuItem
-        '
-        Me.AlarmAuslösenToolStripMenuItem.Name = "AlarmAuslösenToolStripMenuItem"
-        Me.AlarmAuslösenToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AlarmAuslösenToolStripMenuItem.Text = "Alarm auslösen"
         '
         'Form1
         '

@@ -65,13 +65,6 @@ Public Class Form1
         End If
         Return False
     End Function
-    Private Sub testMQTT()
-        If mqttClient.IsConnected Then
-            'Dim msg As MQTTnet.MqttApplicationMessage = New MQTTnet.MqttApplicationMessageBuilder().WithTopic("gebäude1/warnkreis1").WithPayload("Testalarm").WithExactlyOnceQoS().Build()
-            'mqttClient.PublishAsync(msg, Threading.CancellationToken.None)
-            sendAlert()
-        End If
-    End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
@@ -81,8 +74,11 @@ Public Class Form1
 
 
             AddHandler SerialPort1.PinChanged, AddressOf SerialPort1_PinChanged
-
+            mqttClient.UseApplicationMessageReceivedHandler(AddressOf reciveAlert)
+            mqttClient.UseDisconnectedHandler(AddressOf disconnectAlert)
+            mqttClient.UseConnectedHandler(AddressOf connectAlert)
             ConnectionTimer.Start()
+            ConnectionTimer_Tick(ConnectionTimer, New EventArgs)
         End If
     End Sub
     Private Sub SerialPort1_PinChanged(sender As Object, e As IO.Ports.SerialPinChangedEventArgs)
@@ -114,27 +110,21 @@ Public Class Form1
             End Try
         End If
         If mqttClient.IsConnected Then
-            If MQTTStatusLabel.Tag <> 0 Then
-                MQTTStatusLabel.Text = "Mit Server verbunden"
-                MQTTStatusLabel.Tag = 0
-            End If
+
         Else
             If MQTTStatusLabel.Tag <> 1 Then
-                MQTTStatusLabel.Text = "Keine Server Verbindung"
-                MQTTStatusLabel.Tag = 1
+
                 Dim options = New MQTTnet.Client.Options.MqttClientOptionsBuilder().WithClientId(clientID).WithTcpServer(serverAddress, serverPort).WithCredentials(mqttUser, mqttPw).WithCleanSession().Build()
 
                 Dim mqttTask As Task(Of MQTTnet.Client.Connecting.MqttClientAuthenticateResult) = mqttClient.ConnectAsync(options, Threading.CancellationToken.None)
 
                 While mqttTask.IsCompleted = False
-                    Console.WriteLine(mqttTask.IsCompleted)
                 End While
-                Console.WriteLine(mqttTask.IsCompleted)
-                Console.WriteLine(mqttClient.IsConnected)
-                For Each item In alertGroups
-                    Dim unused = subscribeMQTT(item)
-                Next
-                mqttClient.UseApplicationMessageReceivedHandler(AddressOf reciveAlert)
+                If mqttClient.IsConnected Then
+                    For Each item In alertGroups
+                        Dim unused = subscribeMQTT(item)
+                    Next
+                End If
             End If
         End If
 
@@ -213,5 +203,15 @@ Public Class Form1
 
     Private Sub AlarmAuslösenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AlarmAuslösenToolStripMenuItem.Click
         sendAlert()
+    End Sub
+    Private Sub disconnectAlert()
+        If MQTTStatusLabel.Tag <> 0 Then
+            MQTTStatusLabel.Tag = 0
+            NotifyIcon1.ShowBalloonTip(10000, "Keine Verbindung", "Aktuell keine Verbindung zum Server vorhanden", ToolTipIcon.Error)
+        End If
+    End Sub
+    Private Sub connectAlert()
+        MQTTStatusLabel.Tag = 1
+        NotifyIcon1.ShowBalloonTip(5000, "Verbunden", "Verbindung zum Server erfolgreich hergestellt", ToolTipIcon.Info)
     End Sub
 End Class
